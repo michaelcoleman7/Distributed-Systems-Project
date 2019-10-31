@@ -12,6 +12,7 @@ public class PasswordServiceServer {
     private static final int PORT = 50551;
 
     private void start() throws IOException {
+        //Build Server on port 50551
         grpcServer = ServerBuilder.forPort(PORT)
                 .addService(new PasswordServiceImpl())
                 .build()
@@ -20,8 +21,10 @@ public class PasswordServiceServer {
 
     }
 
+    //Method to shutdown server
     private void stop() {
         if (grpcServer != null) {
+            //Shutdown Server
             grpcServer.shutdown();
         }
     }
@@ -36,8 +39,11 @@ public class PasswordServiceServer {
     }
 
     public static void main(String[] args) throws IOException, InterruptedException {
+        //Create new PasswordServiceServer
         final PasswordServiceServer passwordServiceServer = new PasswordServiceServer();
+        //Start Server
         passwordServiceServer.start();
+        //Call block until shutdown method which keeps server on until signalled to shutdown
         passwordServiceServer.blockUntilShutdown();
     }
 }
